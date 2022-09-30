@@ -16,5 +16,37 @@ $.ajaxPrefilter(function (config) {
     config.contentType = 'application/json'
 
     // 统一设置请求的参数-post 请求
-    config.data = format2Json(config.data)
+    config.data = config.data && format2Json(config.data)
+
+    // 此为 config 没有 headers ，添加一个 headers 并且只有 abc的属性
+    // config.headers = {
+    //     'abc' : 'abc'
+    // }
+    // 此为为 config 本身就有的 headers 添加一个abc属性
+    // config[headers] ='abc'
+
+    // 统一设置请求头(有条件的田间)
+    // 请求路径中有 /my 字符串的需要添加
+    // indexOf startsWith endsWith includes
+    if(config.url.includes('/my')) {
+        // 调试，headers属性是自定义的属性 需要进行添加
+        config.headers = {
+            Authorization : localStorage.getItem('big_news_token') || ''
+        }
+    }
+    
+
+    // 统一添加错误 （即没有获取到用户信息）回调
+    config.error = function (err) {  
+        if(
+            err.responseJSON?.code === 1 && err.responseJSON?.message === '身份认证失败！'
+             
+        ){
+            // 1、token 要移除
+            localStorage.removeItem('big_news_token')
+            // 2、页面要跳转到登录页
+            location.href = '/code-01/login.html'
+        }
+    }
+    
 })

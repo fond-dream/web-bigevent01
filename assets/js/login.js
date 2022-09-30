@@ -76,8 +76,8 @@ $(function () {
                 // token 意思是令牌的意思（下一次去请求有权限的接口的时候“带着”）
                 localStorage.setItem('big_news_token', res.token)
                 // 固定的写法： Bearer token 字符串、Bearer 译为持票人拿着token去请求。
-                console.log('成功')
-                // location.href = '/code-01/index.html'
+                layer.msg('登录成功')
+                location.href = '/code-01/index.html'
             }
         })
     })
