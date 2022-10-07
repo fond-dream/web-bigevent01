@@ -13,8 +13,13 @@ $(function () {
     // 入口函数
 })
 
+// var a =100
+// var const 区别？
+// 由 var 声明或者 function 关键字声明的变量会默认存在 window 全局变量上 但是let/ const 不会
+// 口诀：禁止使用var
+
 // 获取基本信息
-const getUserInfo = () => {
+function getUserInfo () {
     $.ajax({
         method:'GET',
         url:'/my/userinfo',
@@ -30,17 +35,19 @@ const getUserInfo = () => {
 }
 
 // 头像渲染
-const renderAvatar = (res) => {
-    if(res.user_pic) {
+function renderAvatar (res) {
+    
+    if(res.data.user_pic) {
         $('.text-avatar').hide()
-        $('.user-box img').css('src', res.user_pic)
+        $('.layui-nav-img').attr('src', res.data.user_pic)
+        $('.layui-nav-img').show()
     }else {
         $('.layui-nav-img').hide()
         // 显示文字头像，去除username属性的第一个字母
         // 取nicakname 和 username
         const name = res.data.nickname || res.data.username
         const char = name[0].toUpperCase()
-        $('.text-avatar').html(char)
+        $('.text-avatar').html(char).show()
     }
     $('.text').html('欢迎&nbsp;&nbsp;'+res.data.username)
 }

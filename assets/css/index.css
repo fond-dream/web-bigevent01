@@ -35,8 +35,10 @@ a {
 .user-box .layui-nav-img {
     width: 40px;
     height: 40px;
+    display: none;
 }
 .user-box .text-avatar {
+    display: none;
     height: 40px;
     width: 40px;
     background-color: rgb(49, 46, 46);

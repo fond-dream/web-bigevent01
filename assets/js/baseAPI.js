@@ -4,7 +4,9 @@ $.ajaxPrefilter(function (config) {
         let target = {}
         source.split('&').forEach((el) => {
             let kv = el.split('=')
-            target[kv[0]] = kv[1]
+            // 浏览器会自动编码所以需要对value进行解码操作
+            // encodeURIComponent编码
+            target[kv[0]] = decodeURIComponent(kv[1])
         })
         return JSON.stringify(target)
     }
@@ -13,7 +15,8 @@ $.ajaxPrefilter(function (config) {
     config.url = 'http://big-event-vue-api-t.itheima.net' + config.url
 
     // 统一设置请求头content-type值
-    config.contentType = 'application/json'
+    // if()
+    config.contentType = 'application/json;charset=utf-8'
 
     // 统一设置请求的参数-post 请求
     config.data = config.data && format2Json(config.data)
